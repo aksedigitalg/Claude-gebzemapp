@@ -1,29 +1,19 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState } from 'react';
 
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const savedUser = localStorage.getItem('gebze_user');
-    if (savedUser) setUser(JSON.parse(savedUser));
-    setLoading(false);
-  }, []);
-
+  // Kullanıcı sadece memory'de tutulur — sayfa yenilenince login ekranı gelir
   const login = (userData) => {
-    const u = { ...userData, loginAt: Date.now() };
-    localStorage.setItem('gebze_user', JSON.stringify(u));
-    setUser(u);
+    setUser({ ...userData, loginAt: Date.now() });
   };
 
   const logout = () => {
-    localStorage.removeItem('gebze_user');
     setUser(null);
   };
 
-  // Sabit demo OTP — gerçek SMS entegrasyonuna kadar 111111
   const sendOTP = (phone) => {
     const code = '111111';
     sessionStorage.setItem(`otp_${phone}`, code);
@@ -60,7 +50,7 @@ export function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider value={{
-      user, loading,
+      user,
       login, logout,
       sendOTP, verifyOTP,
       isRegistered, registerUser, updatePassword,
