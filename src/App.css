@@ -130,14 +130,14 @@
 .bottom-nav {
   max-width: 540px;
   margin: 0 auto;
-  padding: 0;
+  padding: 0 25px;
   pointer-events: all;
 }
 
 .bottom-nav-inner {
   background: #000000;
   border-radius: 24px;
-  padding: 10px 6px;
+  padding: 8px 6px;
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -148,24 +148,31 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px 22px;
-  border-radius: 16px;
+  flex: 1;
+  padding: 4px 0;
   border: none;
   background: transparent;
   cursor: pointer;
-  transition: all 0.18s;
   font-family: var(--font);
-  flex: 1;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.nav-item.active {
+.nav-icon-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.18s;
+}
+
+.nav-item.active .nav-icon-circle {
   background: #1a1a1a;
 }
 
-.nav-icon { display: flex; align-items: center; justify-content: center; }
-
-.nav-item .nav-icon svg { color: #555555; transition: color 0.18s; }
-.nav-item.active .nav-icon svg { color: #ffffff; }
+.nav-item .nav-icon-circle svg { color: #666666; transition: color 0.18s; }
+.nav-item.active .nav-icon-circle svg { color: #ffffff; }
 
 /* ─── Page Title ─── */
 .page-title {

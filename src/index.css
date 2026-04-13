@@ -4,6 +4,11 @@
   box-sizing: border-box;
 }
 
+html {
+  background: #ffffff;
+  overscroll-behavior: none;
+}
+
 body {
   font-family: 'Plus Jakarta Sans', sans-serif;
   background: #ffffff;
@@ -12,6 +17,7 @@ body {
   min-height: 100dvh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overscroll-behavior: none;
 }
 
 #root {

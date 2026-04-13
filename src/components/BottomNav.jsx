@@ -19,8 +19,8 @@ export default function BottomNav({ active, onChange }) {
               className={`nav-item ${active === id ? 'active' : ''}`}
               onClick={() => onChange(id)}
             >
-              <span className="nav-icon">
-                <Icon size={22} strokeWidth={active === id ? 2.5 : 1.8} />
+              <span className="nav-icon-circle">
+                <Icon size={21} strokeWidth={active === id ? 2.5 : 1.8} />
               </span>
             </button>
           ))}
