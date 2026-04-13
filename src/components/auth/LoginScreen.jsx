@@ -11,30 +11,17 @@ export default function LoginScreen({ onRegister, onReset }) {
 
   const handleSubmit = async () => {
     if (phone.length < 10) { setError('Geçerli telefon numarası girin.'); return; }
-    if (!password) { setError('Şifre alanı boş bırakılamaz.'); return; }
-
+    if (!password) { setError('Şifre boş bırakılamaz.'); return; }
     setLoading(true);
-    await new Promise(r => setTimeout(r, 500));
-
+    await new Promise(r => setTimeout(r, 400));
     const user = isRegistered(phone);
-    if (!user) {
-      setError('Bu numara kayıtlı değil. Lütfen kayıt olun.');
-      setLoading(false);
-      return;
-    }
-    if (user.password !== password) {
-      setError('Şifre hatalı.');
-      setLoading(false);
-      return;
-    }
-
+    if (!user) { setError('Bu numara kayıtlı değil. Lütfen kayıt olun.'); setLoading(false); return; }
+    if (user.password !== password) { setError('Şifre hatalı.'); setLoading(false); return; }
     login(user);
-    setLoading(false);
   };
 
   return (
     <div className="auth-screen">
-      <div className="auth-safe-top" />
       <div className="auth-container">
 
         <div className="auth-logo">
@@ -44,9 +31,9 @@ export default function LoginScreen({ onRegister, onReset }) {
         </div>
 
         <h2 className="auth-title">Giriş Yap</h2>
-        <p className="auth-subtitle">Telefon numaranız ve şifrenizle giriş yapın.</p>
+        <p className="auth-subtitle">Telefon ve şifrenizle giriş yapın.</p>
 
-        {error && <div className="error-msg"><span>⚠️</span>{error}</div>}
+        {error && <div className="error-msg"><span>⚠️</span> {error}</div>}
 
         <div className="input-group">
           <label className="input-label">Telefon</label>
@@ -58,10 +45,7 @@ export default function LoginScreen({ onRegister, onReset }) {
               placeholder="5XX XXX XX XX"
               value={phone}
               autoComplete="tel"
-              onChange={e => {
-                setPhone(e.target.value.replace(/\D/g, '').slice(0, 10));
-                setError('');
-              }}
+              onChange={e => { setPhone(e.target.value.replace(/\D/g, '').slice(0, 10)); setError(''); }}
             />
           </div>
         </div>
@@ -79,7 +63,7 @@ export default function LoginScreen({ onRegister, onReset }) {
           />
         </div>
 
-        <div style={{ textAlign: 'right', marginBottom: 20, marginTop: -6 }}>
+        <div style={{ textAlign: 'right', marginBottom: 20 }}>
           <button className="auth-link" onClick={onReset}>Şifremi unuttum</button>
         </div>
 
@@ -91,8 +75,8 @@ export default function LoginScreen({ onRegister, onReset }) {
           Hesabınız yok mu?{' '}
           <button className="auth-link" onClick={onRegister}>Kayıt Ol</button>
         </div>
+
       </div>
-      <div className="auth-safe-bottom" />
     </div>
   );
 }

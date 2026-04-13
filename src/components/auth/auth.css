@@ -1,32 +1,21 @@
-/* ─── Auth ekran temel yapısı ─── */
+/* ─── Auth ekran: en sade yapı ─── */
 .auth-screen {
-  min-height: 100vh;
   min-height: 100dvh;
   background: #0b1120;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* safe-area için üst boşluk ayrı bir div ile sağlanıyor */
-.auth-safe-top {
-  height: env(safe-area-inset-top, 0px);
-  background: #0b1120;
-}
-
-.auth-safe-bottom {
-  height: calc(env(safe-area-inset-bottom, 0px) + 24px);
 }
 
 .auth-container {
   max-width: 480px;
   margin: 0 auto;
-  padding: 32px 24px 40px;
-  width: 100%;
+  /* safe-area + boşluk */
+  padding-top: calc(env(safe-area-inset-top, 0px) + 32px);
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 40px);
+  padding-left: 24px;
+  padding-right: 24px;
 }
 
 /* ─── Onboarding ─── */
 .onboarding {
-  min-height: 100vh;
   min-height: 100dvh;
   background: #0b1120;
   display: flex;
@@ -102,9 +91,7 @@
 
 /* ─── Logo ─── */
 .auth-logo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  text-align: center;
   margin-bottom: 36px;
   padding-top: 8px;
 }
@@ -114,7 +101,7 @@
   height: 68px;
   background: linear-gradient(135deg, #3b82f6, #1d4ed8);
   border-radius: 20px;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   font-size: 34px;
@@ -126,12 +113,13 @@
   font-size: 22px;
   font-weight: 800;
   color: #f1f5f9;
-  letter-spacing: -0.5px;
+  display: block;
 }
 
 .auth-logo span {
   font-size: 13px;
   color: #475569;
+  display: block;
   margin-top: 3px;
 }
 
@@ -140,7 +128,6 @@
   font-size: 24px;
   font-weight: 800;
   color: #f1f5f9;
-  letter-spacing: -0.5px;
   margin-bottom: 6px;
 }
 
@@ -173,7 +160,7 @@
   background: #141f35;
   border: 1.5px solid #1e2d45;
   border-radius: 14px;
-  padding: 15px 16px;
+  padding: 16px;
   font-size: 16px;
   color: #f1f5f9;
   font-family: 'Inter', sans-serif;
@@ -181,37 +168,35 @@
   -webkit-appearance: none;
   appearance: none;
   box-sizing: border-box;
-  -webkit-user-select: text !important;
-  user-select: text !important;
-  touch-action: manipulation;
 }
 
 .input-field:focus { border-color: #3b82f6; }
 .input-field::placeholder { color: #334155; }
 .input-field.error { border-color: #ef4444; }
 
-/* Prefix'li input (bayrak + numara) */
+/* Prefix'li input */
 .input-prefix-wrap {
-  display: flex;
+  width: 100%;
   background: #141f35;
   border: 1.5px solid #1e2d45;
   border-radius: 14px;
+  display: flex;
+  align-items: stretch;
   box-sizing: border-box;
 }
 
 .input-prefix-wrap:focus-within { border-color: #3b82f6; }
 
 .input-prefix-flag {
-  padding: 15px 12px 15px 16px;
+  padding: 16px 12px 16px 16px;
   font-size: 14px;
   color: #64748b;
   border-right: 1px solid #1e2d45;
   white-space: nowrap;
   flex-shrink: 0;
+  line-height: 1;
   display: flex;
   align-items: center;
-  user-select: none;
-  pointer-events: none;
 }
 
 .input-prefix-wrap input {
@@ -220,15 +205,12 @@
   background: transparent;
   border: none;
   outline: none;
-  padding: 15px 16px;
+  padding: 16px;
   font-size: 16px;
   color: #f1f5f9;
   font-family: 'Inter', sans-serif;
   -webkit-appearance: none;
   appearance: none;
-  -webkit-user-select: text !important;
-  user-select: text !important;
-  touch-action: manipulation;
   box-sizing: border-box;
 }
 
@@ -236,10 +218,7 @@
 
 /* ─── Butonlar ─── */
 .btn-primary {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
+  display: block;
   width: 100%;
   background: #3b82f6;
   color: #fff;
@@ -250,12 +229,13 @@
   font-weight: 700;
   cursor: pointer;
   font-family: 'Inter', sans-serif;
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
+  text-align: center;
   margin-top: 8px;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.btn-primary:active { opacity: 0.85; }
+.btn-primary:active { opacity: 0.8; }
 .btn-primary:disabled { opacity: 0.35; }
 
 .btn-secondary {
@@ -272,10 +252,8 @@
   font-family: 'Inter', sans-serif;
   text-align: center;
   margin-top: 10px;
-  touch-action: manipulation;
+  box-sizing: border-box;
 }
-
-.btn-secondary:active { opacity: 0.7; }
 
 .btn-skip {
   background: transparent;
@@ -287,7 +265,6 @@
   font-family: 'Inter', sans-serif;
   padding: 16px 8px;
   flex-shrink: 0;
-  touch-action: manipulation;
 }
 
 .btn-back {
@@ -303,7 +280,6 @@
   gap: 6px;
   margin-bottom: 24px;
   padding: 0;
-  touch-action: manipulation;
 }
 
 /* ─── OTP ─── */
@@ -328,9 +304,6 @@
   outline: none;
   -webkit-appearance: none;
   appearance: none;
-  -webkit-user-select: text !important;
-  user-select: text !important;
-  touch-action: manipulation;
   box-sizing: border-box;
 }
 
@@ -366,10 +339,10 @@
   margin-top: 2px;
 }
 
-/* ─── Hata mesajı ─── */
+/* ─── Hata ─── */
 .error-msg {
   background: rgba(239,68,68,0.1);
-  border: 1px solid rgba(239,68,68,0.25);
+  border: 1px solid rgba(239,68,68,0.2);
   border-radius: 10px;
   padding: 10px 14px;
   font-size: 13px;
@@ -380,7 +353,7 @@
   gap: 8px;
 }
 
-/* ─── Link stil ─── */
+/* ─── Linkler ─── */
 .auth-link-row {
   text-align: center;
   margin-top: 20px;
@@ -397,57 +370,6 @@
   font-family: 'Inter', sans-serif;
   font-size: 14px;
   padding: 0;
-  touch-action: manipulation;
-}
-
-/* ─── Divider ─── */
-.auth-divider {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin: 20px 0;
-  color: #334155;
-  font-size: 13px;
-}
-
-.auth-divider::before,
-.auth-divider::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: #1e2d45;
-}
-
-/* ─── Telefon badge ─── */
-.phone-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: #141f35;
-  border: 1px solid #1e2d45;
-  border-radius: 20px;
-  padding: 6px 14px;
-  font-size: 14px;
-  color: #94a3b8;
-  margin-bottom: 24px;
-}
-
-/* ─── Başarı ekranı ─── */
-.success-screen {
-  text-align: center;
-  padding: 40px 20px;
-}
-
-.success-icon {
-  width: 72px;
-  height: 72px;
-  background: rgba(34,197,94,0.12);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 36px;
-  margin: 0 auto 20px;
 }
 
 /* ─── Adım göstergesi ─── */
@@ -464,6 +386,7 @@
   border-radius: 50%;
   background: #1e2d45;
   transition: all 0.3s;
+  flex-shrink: 0;
 }
 
 .step-dot.active { background: #3b82f6; transform: scale(1.3); }
@@ -474,31 +397,43 @@
   height: 2px;
   background: #1e2d45;
   border-radius: 1px;
-  transition: background 0.3s;
 }
 
 .step-line.done { background: #22c55e; }
 
 /* ─── Resend ─── */
-.resend-row {
-  text-align: center;
-  margin-top: 16px;
-}
-
+.resend-row { text-align: center; margin-top: 16px; }
 .resend-btn {
-  background: none;
-  border: none;
-  color: #3b82f6;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
+  background: none; border: none; color: #3b82f6;
+  font-size: 14px; font-weight: 600; cursor: pointer;
   font-family: 'Inter', sans-serif;
-  touch-action: manipulation;
 }
-
 .resend-timer { font-size: 13px; color: #475569; }
 
-/* ─── Terms ─── */
+/* ─── Başarı ─── */
+.success-screen { text-align: center; padding: 60px 20px; }
+.success-icon {
+  width: 72px; height: 72px;
+  background: rgba(34,197,94,0.12);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 36px; margin: 0 auto 20px;
+}
+
+/* ─── Phone badge ─── */
+.phone-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #141f35;
+  border: 1px solid #1e2d45;
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 14px;
+  color: #94a3b8;
+  margin-bottom: 24px;
+}
+
 .terms-text {
   font-size: 12px;
   color: #334155;
