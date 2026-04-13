@@ -58,7 +58,7 @@ export default function PhoneScreen({ onNext }) {
               value={phone}
               onChange={handleChange}
               onKeyDown={e => e.key === 'Enter' && handleSubmit()}
-              autoFocus
+              autoComplete="tel"
             />
           </div>
         </div>
