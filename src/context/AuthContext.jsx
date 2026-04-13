@@ -31,12 +31,11 @@ export function AuthProvider({ children }) {
     setUser(null);
   };
 
-  // Simulated SMS OTP — real app would call an API here
+  // Sabit demo OTP — gerçek SMS entegrasyonuna kadar 111111
   const sendOTP = (phone) => {
-    const code = Math.floor(100000 + Math.random() * 900000).toString();
+    const code = '111111';
     sessionStorage.setItem(`otp_${phone}`, code);
-    console.info(`[DEV] OTP for ${phone}: ${code}`);
-    return code; // returned so we can show it in demo banner
+    return code;
   };
 
   const verifyOTP = (phone, code) => {

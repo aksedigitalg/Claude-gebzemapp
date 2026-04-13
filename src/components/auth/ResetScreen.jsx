@@ -8,7 +8,7 @@ export default function ResetScreen({ onBack, onDone }) {
   const [step, setStep] = useState(1);
   const [phone, setPhone] = useState('');
   const [otpCode, setOtpCode] = useState('');
-  const [digits, setDigits] = useState(['', '', '', '', '', '']);
+  const [digits, setDigits] = useState(['1','1','1','1','1','1']);
   const [pin, setPin] = useState('');
   const [pinConfirm, setPinConfirm] = useState('');
   const [error, setError] = useState('');
@@ -23,6 +23,7 @@ export default function ResetScreen({ onBack, onDone }) {
     await new Promise(r => setTimeout(r, 500));
     const code = sendOTP(phone);
     setOtpCode(code);
+    setDigits(['1','1','1','1','1','1']);
     setLoading(false);
     setError('');
     setStep(2);

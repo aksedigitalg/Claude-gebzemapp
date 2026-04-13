@@ -4,7 +4,7 @@ import './auth.css';
 
 export default function OTPScreen({ phone, otpCode, onSuccess, onBack }) {
   const { verifyOTP, sendOTP, isRegistered } = useAuth();
-  const [digits, setDigits] = useState(['', '', '', '', '', '']);
+  const [digits, setDigits] = useState(['1','1','1','1','1','1']);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [timer, setTimer] = useState(60);
@@ -14,6 +14,11 @@ export default function OTPScreen({ phone, otpCode, onSuccess, onBack }) {
   useEffect(() => {
     const t = setInterval(() => setTimer(p => (p > 0 ? p - 1 : 0)), 1000);
     return () => clearInterval(t);
+  }, []);
+
+  // Otomatik doğrula
+  useEffect(() => {
+    verify('111111');
   }, []);
 
   const handleChange = (i, val) => {
@@ -91,8 +96,8 @@ export default function OTPScreen({ phone, otpCode, onSuccess, onBack }) {
         <div className="otp-demo-banner">
           <span>🧪</span>
           <div>
-            <div className="demo-label">Demo Kodu (gerçek SMS yok)</div>
-            <div className="demo-code">{currentCode}</div>
+            <div className="demo-label">Demo — Otomatik kod</div>
+            <div className="demo-code">1 1 1 1 1 1</div>
           </div>
         </div>
 

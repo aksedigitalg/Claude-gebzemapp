@@ -43,11 +43,13 @@ export default function PharmaciesPage() {
             <div className="pharmacy-info">
               <div className="pharmacy-info-row"><MapPin size={13} />{p.address}</div>
               <div className="pharmacy-info-row"><Clock size={13} />{p.hours}</div>
-              <div className="pharmacy-info-row" style={{ color: '#334155' }}><MapPin size={13} />{p.neighborhood}</div>
-            </div>
-            <div className="pharmacy-phone">
-              <a className="phone-btn" href={`tel:${p.phone}`}>
-                <Phone size={13} />{p.phone}
+              <a
+                className="pharmacy-info-row"
+                href={`tel:${p.phone.replace(/\s/g, '')}`}
+                style={{ color: '#3b82f6', textDecoration: 'none', fontWeight: 600 }}
+              >
+                <Phone size={13} style={{ color: '#3b82f6' }} />
+                {p.phone}
               </a>
             </div>
           </div>
