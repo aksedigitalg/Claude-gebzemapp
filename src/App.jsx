@@ -3,7 +3,6 @@ import './App.css';
 import { useAuth } from './context/AuthContext';
 
 // Auth screens
-import OnboardingScreen from './components/auth/OnboardingScreen';
 import LoginScreen from './components/auth/LoginScreen';
 import RegisterScreen from './components/auth/RegisterScreen';
 import ResetScreen from './components/auth/ResetScreen';
@@ -76,13 +75,13 @@ function MainApp() {
 
 // Root — decides which flow to show
 export default function App() {
-  const { loading, onboardingDone, user } = useAuth();
+  const { loading, user } = useAuth();
 
   if (loading) {
     return (
       <div style={{
-        minHeight: '100vh',
-        background: '#0b1120',
+        minHeight: '100dvh',
+        background: '#0a0a0a',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -93,7 +92,6 @@ export default function App() {
     );
   }
 
-  if (!onboardingDone) return <OnboardingScreen />;
   if (!user) return <AuthFlow />;
   return <MainApp />;
 }
