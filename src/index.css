@@ -6,8 +6,8 @@
 
 body {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  background: #0a0a0a;
-  color: #ffffff;
+  background: #ffffff;
+  color: #111111;
   min-height: 100vh;
   min-height: 100dvh;
   -webkit-font-smoothing: antialiased;
@@ -20,7 +20,7 @@ body {
 }
 
 ::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: #0a0a0a; }
-::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+::-webkit-scrollbar-track { background: #ffffff; }
+::-webkit-scrollbar-thumb { background: #dddddd; border-radius: 4px; }
 
 .leaflet-container { border-radius: 14px; }
