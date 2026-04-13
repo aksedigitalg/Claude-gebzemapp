@@ -39,6 +39,9 @@ export default defineConfig({
         ],
       },
       workbox: {
+        // Yeni sürüm gelince eski service worker'ı hemen değiştir
+        skipWaiting: true,
+        clientsClaim: true,
         globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
         runtimeCaching: [
           {
