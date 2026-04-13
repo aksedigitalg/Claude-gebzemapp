@@ -4,8 +4,7 @@ import { useAuth } from './context/AuthContext';
 
 // Auth screens
 import OnboardingScreen from './components/auth/OnboardingScreen';
-import PhoneScreen from './components/auth/PhoneScreen';
-import OTPScreen from './components/auth/OTPScreen';
+import LoginScreen from './components/auth/LoginScreen';
 import RegisterScreen from './components/auth/RegisterScreen';
 import ResetScreen from './components/auth/ResetScreen';
 
@@ -20,64 +19,29 @@ import SearchPage from './components/SearchPage';
 import CategoriesPage from './components/CategoriesPage';
 import ProfilePage from './components/ProfilePage';
 
-// Auth flow states: phone → otp → register | reset
+// Auth flow: login | register | reset
 function AuthFlow() {
-  const { login, isRegistered } = useAuth();
-  const [authStep, setAuthStep] = useState('phone'); // phone | otp | register | reset
-  const [authData, setAuthData] = useState({});
+  const [screen, setScreen] = useState('login');
 
-  const handlePhoneNext = ({ phone, otpCode }) => {
-    setAuthData({ phone, otpCode });
-    setAuthStep('otp');
-  };
-
-  const handleOTPSuccess = ({ phone, isNewUser, existingUser }) => {
-    if (isNewUser) {
-      setAuthData(d => ({ ...d, phone }));
-      setAuthStep('register');
-    } else {
-      login(existingUser);
-    }
-  };
-
-  if (authStep === 'phone') {
+  if (screen === 'login') {
     return (
-      <PhoneScreen
-        onNext={handlePhoneNext}
-        onReset={() => setAuthStep('reset')}
+      <LoginScreen
+        onRegister={() => setScreen('register')}
+        onReset={() => setScreen('reset')}
       />
     );
   }
-
-  if (authStep === 'otp') {
-    return (
-      <OTPScreen
-        phone={authData.phone}
-        otpCode={authData.otpCode}
-        onSuccess={handleOTPSuccess}
-        onBack={() => setAuthStep('phone')}
-      />
-    );
+  if (screen === 'register') {
+    return <RegisterScreen onBack={() => setScreen('login')} />;
   }
-
-  if (authStep === 'register') {
-    return (
-      <RegisterScreen
-        phone={authData.phone}
-        onBack={() => setAuthStep('otp')}
-      />
-    );
-  }
-
-  if (authStep === 'reset') {
+  if (screen === 'reset') {
     return (
       <ResetScreen
-        onBack={() => setAuthStep('phone')}
-        onDone={() => setAuthStep('phone')}
+        onBack={() => setScreen('login')}
+        onDone={() => setScreen('login')}
       />
     );
   }
-
   return null;
 }
 

@@ -2,34 +2,29 @@ import { useState, useRef } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import './auth.css';
 
-// Step 1: phone  →  Step 2: OTP  →  Step 3: new PIN  →  done
 export default function ResetScreen({ onBack, onDone }) {
-  const { sendOTP, verifyOTP } = useAuth();
+  const { sendOTP, verifyOTP, updatePassword } = useAuth();
   const [step, setStep] = useState(1);
   const [phone, setPhone] = useState('');
-  const [otpCode, setOtpCode] = useState('');
   const [digits, setDigits] = useState(['1','1','1','1','1','1']);
-  const [pin, setPin] = useState('');
-  const [pinConfirm, setPinConfirm] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
   const otpRefs = useRef([]);
 
-  /* ── Step 1: send OTP ── */
   const sendCode = async () => {
     if (phone.length < 10) { setError('Geçerli telefon numarası girin.'); return; }
     setLoading(true);
     await new Promise(r => setTimeout(r, 500));
-    const code = sendOTP(phone);
-    setOtpCode(code);
+    sendOTP(phone);
     setDigits(['1','1','1','1','1','1']);
-    setLoading(false);
     setError('');
+    setLoading(false);
     setStep(2);
   };
 
-  /* ── Step 2: verify OTP ── */
   const handleOtpChange = (i, val) => {
     const v = val.replace(/\D/g, '').slice(-1);
     const next = [...digits];
@@ -52,26 +47,26 @@ export default function ResetScreen({ onBack, onDone }) {
     if (ok) { setStep(3); setError(''); }
     else {
       setError('Kod hatalı.');
-      setDigits(['', '', '', '', '', '']);
+      setDigits(['','','','','','']);
       otpRefs.current[0]?.focus();
     }
   };
 
-  /* ── Step 3: new PIN ── */
-  const savePin = async () => {
-    if (pin.length < 4) { setError('PIN en az 4 karakter olmalı.'); return; }
-    if (pin !== pinConfirm) { setError('PIN\'ler eşleşmiyor.'); return; }
+  const savePassword = async () => {
+    if (password.length < 4) { setError('Şifre en az 4 karakter olmalı.'); return; }
+    if (password !== passwordConfirm) { setError('Şifreler eşleşmiyor.'); return; }
     setLoading(true);
-    await new Promise(r => setTimeout(r, 600));
-    // In a real app: save hashed PIN to backend
+    await new Promise(r => setTimeout(r, 500));
+    updatePassword(phone, password);
     setDone(true);
     setLoading(false);
-    setTimeout(onDone, 1500);
+    setTimeout(onDone, 1200);
   };
 
   if (done) {
     return (
       <div className="auth-screen">
+        <div className="auth-safe-top" />
         <div className="auth-container">
           <div className="success-screen">
             <div className="success-icon">✅</div>
@@ -85,65 +80,55 @@ export default function ResetScreen({ onBack, onDone }) {
 
   return (
     <div className="auth-screen">
+      <div className="auth-safe-top" />
       <div className="auth-container">
-        <button className="btn-back" onClick={step === 1 ? onBack : () => setStep(s => s - 1)}>
-          ← Geri
-        </button>
+        <button className="btn-back" onClick={step === 1 ? onBack : () => setStep(s => s - 1)}>← Geri</button>
 
-        {/* Step indicator */}
         <div className="step-indicator">
-          <div className={`step-dot ${step >= 1 ? 'done' : ''}`} />
+          <div className={`step-dot ${step >= 1 ? 'done' : 'active'}`} />
           <div className={`step-line ${step >= 2 ? 'done' : ''}`} />
-          <div className={`step-dot ${step >= 2 ? 'done' : ''} ${step === 2 ? 'active' : ''}`} />
+          <div className={`step-dot ${step === 2 ? 'active' : ''} ${step > 2 ? 'done' : ''}`} />
           <div className={`step-line ${step >= 3 ? 'done' : ''}`} />
           <div className={`step-dot ${step === 3 ? 'active' : ''}`} />
         </div>
 
-        {/* ── Step 1 ── */}
         {step === 1 && (
           <>
-            <h2 className="auth-title">Şifre Yenile</h2>
-            <p className="auth-subtitle">Kayıtlı telefon numaranızı girin.</p>
-
+            <h2 className="auth-title">Şifremi Unuttum</h2>
+            <p className="auth-subtitle">Kayıtlı telefon numaranıza doğrulama kodu göndereceğiz.</p>
             {error && <div className="error-msg"><span>⚠️</span>{error}</div>}
-
             <div className="input-group">
               <label className="input-label">Telefon</label>
-              <div className="input-prefix">
-                <span className="prefix-flag">🇹🇷 +90</span>
+              <div className="input-prefix-wrap">
+                <span className="input-prefix-flag">🇹🇷 +90</span>
                 <input
                   type="tel"
                   inputMode="numeric"
                   placeholder="5XX XXX XX XX"
                   value={phone}
-                  onChange={e => setPhone(e.target.value.replace(/\D/g, '').slice(0, 10))}
-                  autoFocus
+                  autoComplete="tel"
+                  onChange={e => { setPhone(e.target.value.replace(/\D/g, '').slice(0, 10)); setError(''); }}
                 />
               </div>
             </div>
-
             <button className="btn-primary" onClick={sendCode} disabled={phone.length < 10 || loading}>
               {loading ? '⏳ Gönderiliyor...' : 'Kod Gönder →'}
             </button>
           </>
         )}
 
-        {/* ── Step 2 ── */}
         {step === 2 && (
           <>
-            <h2 className="auth-title">Kodu Doğrula</h2>
-            <p className="auth-subtitle">+90 {phone} numarasına gönderilen kodu girin.</p>
-
+            <h2 className="auth-title">Kodu Girin</h2>
+            <p className="auth-subtitle">+90 {phone} numarasına gönderilen 6 haneli kodu girin.</p>
             <div className="otp-demo-banner">
               <span>🧪</span>
               <div>
-                <div className="demo-label">Demo Kodu</div>
-                <div className="demo-code">{otpCode}</div>
+                <div className="demo-label">Demo — Otomatik kod</div>
+                <div className="demo-code">1 1 1 1 1 1</div>
               </div>
             </div>
-
             {error && <div className="error-msg"><span>⚠️</span>{error}</div>}
-
             <div className="otp-group">
               {digits.map((d, i) => (
                 <input
@@ -156,57 +141,51 @@ export default function ResetScreen({ onBack, onDone }) {
                   value={d}
                   onChange={e => handleOtpChange(i, e.target.value)}
                   onKeyDown={e => handleOtpKey(i, e)}
-                  autoFocus={i === 0}
                 />
               ))}
             </div>
-
-            <button className="btn-primary" onClick={() => verifyCode(digits.join(''))}
-              disabled={digits.some(d => !d) || loading}>
+            <button className="btn-primary" onClick={() => verifyCode(digits.join(''))} disabled={digits.some(d => !d) || loading}>
               {loading ? '⏳ Doğrulanıyor...' : 'Doğrula ✓'}
             </button>
           </>
         )}
 
-        {/* ── Step 3 ── */}
         {step === 3 && (
           <>
             <h2 className="auth-title">Yeni Şifre</h2>
-            <p className="auth-subtitle">4+ karakterli yeni şifrenizi belirleyin.</p>
-
+            <p className="auth-subtitle">En az 4 karakterli yeni şifrenizi belirleyin.</p>
             {error && <div className="error-msg"><span>⚠️</span>{error}</div>}
-
             <div className="input-group">
               <label className="input-label">Yeni Şifre</label>
               <input
                 className="input-field"
                 type="password"
                 placeholder="••••••"
-                value={pin}
-                onChange={e => { setPin(e.target.value); setError(''); }}
-                autoFocus
+                value={password}
+                autoComplete="new-password"
+                onChange={e => { setPassword(e.target.value); setError(''); }}
               />
             </div>
-
             <div className="input-group">
               <label className="input-label">Şifre Tekrar</label>
               <input
                 className={`input-field ${error ? 'error' : ''}`}
                 type="password"
                 placeholder="••••••"
-                value={pinConfirm}
-                onChange={e => { setPinConfirm(e.target.value); setError(''); }}
-                onKeyDown={e => e.key === 'Enter' && savePin()}
+                value={passwordConfirm}
+                autoComplete="new-password"
+                onChange={e => { setPasswordConfirm(e.target.value); setError(''); }}
+                onKeyDown={e => e.key === 'Enter' && savePassword()}
               />
             </div>
-
-            <button className="btn-primary" onClick={savePin}
-              disabled={!pin || !pinConfirm || loading} style={{ marginTop: 8 }}>
+            <button className="btn-primary" onClick={savePassword} disabled={!password || !passwordConfirm || loading}>
               {loading ? '⏳ Kaydediliyor...' : 'Şifreyi Güncelle ✓'}
             </button>
           </>
         )}
+
       </div>
+      <div className="auth-safe-bottom" />
     </div>
   );
 }

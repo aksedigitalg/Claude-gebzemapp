@@ -52,12 +52,18 @@ export function AuthProvider({ children }) {
     return users.find(u => u.phone === phone) || null;
   };
 
-  const registerUser = (phone, name, surname) => {
+  const registerUser = (phone, name, surname, password) => {
     const users = JSON.parse(localStorage.getItem('gebze_users') || '[]');
-    const newUser = { phone, name, surname, createdAt: Date.now() };
+    const newUser = { phone, name, surname, password, createdAt: Date.now() };
     users.push(newUser);
     localStorage.setItem('gebze_users', JSON.stringify(users));
     return newUser;
+  };
+
+  const updatePassword = (phone, password) => {
+    const users = JSON.parse(localStorage.getItem('gebze_users') || '[]');
+    const updated = users.map(u => u.phone === phone ? { ...u, password } : u);
+    localStorage.setItem('gebze_users', JSON.stringify(updated));
   };
 
   return (
@@ -67,7 +73,7 @@ export function AuthProvider({ children }) {
       completeOnboarding,
       login, logout,
       sendOTP, verifyOTP,
-      isRegistered, registerUser,
+      isRegistered, registerUser, updatePassword,
     }}>
       {children}
     </AuthContext.Provider>

@@ -1,26 +1,27 @@
-/* ─── Auth Wrapper ─── */
+/* ─── Auth ekran temel yapısı ─── */
 .auth-screen {
   min-height: 100vh;
   min-height: 100dvh;
   background: #0b1120;
-  display: flex;
-  flex-direction: column;
-  /* Safe area for notch/status bar */
-  padding-top: env(safe-area-inset-top, 0px);
-  padding-bottom: env(safe-area-inset-bottom, 0px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* safe-area için üst boşluk ayrı bir div ile sağlanıyor */
+.auth-safe-top {
+  height: env(safe-area-inset-top, 0px);
+  background: #0b1120;
+}
+
+.auth-safe-bottom {
+  height: calc(env(safe-area-inset-bottom, 0px) + 24px);
 }
 
 .auth-container {
-  max-width: 540px;
+  max-width: 480px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 32px 24px 40px;
   width: 100%;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding-top: 40px;
-  padding-bottom: 40px;
 }
 
 /* ─── Onboarding ─── */
@@ -28,64 +29,56 @@
   min-height: 100vh;
   min-height: 100dvh;
   background: #0b1120;
-  padding-top: env(safe-area-inset-top, 0px);
-  padding-bottom: env(safe-area-inset-bottom, 0px);
   display: flex;
   flex-direction: column;
-}
-
-.onboarding-slides {
-  flex: 1;
-  display: flex;
-  overflow: hidden;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 .slide {
-  min-width: 100%;
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 40px 32px;
   text-align: center;
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .slide-emoji {
-  font-size: 96px;
-  margin-bottom: 32px;
+  font-size: 88px;
+  margin-bottom: 28px;
   display: block;
-  filter: drop-shadow(0 8px 24px rgba(59,130,246,0.3));
 }
 
 .slide h2 {
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 800;
   color: #f1f5f9;
   letter-spacing: -0.5px;
-  margin-bottom: 14px;
+  margin-bottom: 12px;
   line-height: 1.2;
 }
 
 .slide p {
-  font-size: 16px;
+  font-size: 15px;
   color: #64748b;
   line-height: 1.6;
   max-width: 280px;
 }
 
 .onboarding-footer {
-  max-width: 540px;
+  max-width: 480px;
   margin: 0 auto;
   width: 100%;
-  padding: 24px 24px 48px;
+  padding: 20px 24px 40px;
 }
 
 .dots {
   display: flex;
   justify-content: center;
   gap: 8px;
-  margin-bottom: 32px;
+  margin-bottom: 28px;
 }
 
 .dot {
@@ -107,83 +100,30 @@
   align-items: center;
 }
 
-.btn-skip {
-  background: transparent;
-  border: none;
-  color: #475569;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  font-family: 'Inter', sans-serif;
-  padding: 16px 4px;
-  flex-shrink: 0;
-}
-
-.btn-skip:hover { color: #94a3b8; }
-
-/* ─── Primary Button ─── */
-.btn-primary {
-  flex: 1;
-  background: #3b82f6;
-  color: #fff;
-  border: none;
-  border-radius: 16px;
-  padding: 16px;
-  font-size: 16px;
-  font-weight: 700;
-  cursor: pointer;
-  font-family: 'Inter', sans-serif;
-  transition: all 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-
-.btn-primary:hover { background: #2563eb; transform: translateY(-1px); }
-.btn-primary:active { transform: translateY(0); }
-.btn-primary:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
-
-.btn-secondary {
-  width: 100%;
-  background: #141f35;
-  color: #94a3b8;
-  border: 1px solid #1e2d45;
-  border-radius: 16px;
-  padding: 16px;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  font-family: 'Inter', sans-serif;
-  transition: all 0.2s;
-  margin-top: 12px;
-}
-
-.btn-secondary:hover { border-color: #3b82f6; color: #e2e8f0; }
-
-/* ─── Auth Logo ─── */
+/* ─── Logo ─── */
 .auth-logo {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 40px;
+  margin-bottom: 36px;
+  padding-top: 8px;
 }
 
 .auth-logo-icon {
-  width: 72px;
-  height: 72px;
+  width: 68px;
+  height: 68px;
   background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-  border-radius: 22px;
+  border-radius: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 36px;
-  margin-bottom: 16px;
-  box-shadow: 0 8px 32px rgba(59,130,246,0.3);
+  font-size: 34px;
+  margin-bottom: 14px;
+  box-shadow: 0 8px 24px rgba(59,130,246,0.3);
 }
 
 .auth-logo h1 {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 800;
   color: #f1f5f9;
   letter-spacing: -0.5px;
@@ -192,41 +132,43 @@
 .auth-logo span {
   font-size: 13px;
   color: #475569;
-  margin-top: 4px;
+  margin-top: 3px;
 }
 
-/* ─── Auth Title ─── */
+/* ─── Başlık ─── */
 .auth-title {
-  font-size: 26px;
+  font-size: 24px;
   font-weight: 800;
   color: #f1f5f9;
   letter-spacing: -0.5px;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .auth-subtitle {
   font-size: 14px;
   color: #475569;
-  margin-bottom: 32px;
+  margin-bottom: 28px;
   line-height: 1.5;
 }
 
-/* ─── Input Group ─── */
+/* ─── Input group ─── */
 .input-group {
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
 .input-label {
-  font-size: 13px;
-  font-weight: 600;
-  color: #64748b;
-  margin-bottom: 8px;
   display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: #475569;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  margin-bottom: 8px;
 }
 
+/* Standart input */
 .input-field {
+  display: block;
   width: 100%;
   background: #141f35;
   border: 1.5px solid #1e2d45;
@@ -236,42 +178,45 @@
   color: #f1f5f9;
   font-family: 'Inter', sans-serif;
   outline: none;
-  transition: border-color 0.2s;
   -webkit-appearance: none;
-  -webkit-user-select: text;
-  user-select: text;
+  appearance: none;
+  box-sizing: border-box;
+  -webkit-user-select: text !important;
+  user-select: text !important;
   touch-action: manipulation;
-  cursor: text;
 }
 
-.input-field::placeholder { color: #334155; }
 .input-field:focus { border-color: #3b82f6; }
+.input-field::placeholder { color: #334155; }
 .input-field.error { border-color: #ef4444; }
 
-.input-prefix {
+/* Prefix'li input (bayrak + numara) */
+.input-prefix-wrap {
   display: flex;
-  align-items: center;
   background: #141f35;
   border: 1.5px solid #1e2d45;
   border-radius: 14px;
-  /* overflow:hidden kaldırıldı — PWA'da dokunma olaylarını bloke ediyordu */
-  transition: border-color 0.2s;
+  box-sizing: border-box;
 }
 
-.input-prefix:focus-within { border-color: #3b82f6; }
+.input-prefix-wrap:focus-within { border-color: #3b82f6; }
 
-.prefix-flag {
+.input-prefix-flag {
   padding: 15px 12px 15px 16px;
-  border-right: 1px solid #1e2d45;
-  color: #94a3b8;
   font-size: 14px;
+  color: #64748b;
+  border-right: 1px solid #1e2d45;
   white-space: nowrap;
-  user-select: none;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  user-select: none;
+  pointer-events: none;
 }
 
-.input-prefix input {
+.input-prefix-wrap input {
   flex: 1;
+  min-width: 0;
   background: transparent;
   border: none;
   outline: none;
@@ -280,123 +225,71 @@
   color: #f1f5f9;
   font-family: 'Inter', sans-serif;
   -webkit-appearance: none;
-  /* PWA klavye için zorunlu */
-  -webkit-user-select: text;
-  user-select: text;
+  appearance: none;
+  -webkit-user-select: text !important;
+  user-select: text !important;
   touch-action: manipulation;
-  cursor: text;
-  min-width: 0;
+  box-sizing: border-box;
 }
 
-.input-prefix input::placeholder { color: #334155; }
+.input-prefix-wrap input::placeholder { color: #334155; }
 
-/* ─── OTP Inputs ─── */
-.otp-group {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  margin-bottom: 24px;
-}
-
-.otp-input {
-  width: 48px;
-  height: 58px;
-  background: #141f35;
-  border: 1.5px solid #1e2d45;
-  border-radius: 14px;
-  text-align: center;
-  font-size: 24px;
-  font-weight: 800;
-  color: #f1f5f9;
-  font-family: 'Inter', sans-serif;
-  outline: none;
-  transition: all 0.2s;
-  caret-color: #3b82f6;
-  -webkit-appearance: none;
-}
-
-.otp-input:focus {
-  border-color: #3b82f6;
-  background: #172040;
-  transform: scale(1.05);
-}
-
-.otp-input.filled {
-  border-color: #22c55e;
-  color: #22c55e;
-}
-
-.otp-input.error {
-  border-color: #ef4444;
-  color: #ef4444;
-}
-
-/* ─── Demo OTP Banner ─── */
-.otp-demo-banner {
-  background: rgba(245,158,11,0.1);
-  border: 1px solid rgba(245,158,11,0.25);
-  border-radius: 12px;
-  padding: 12px 16px;
-  margin-bottom: 24px;
+/* ─── Butonlar ─── */
+.btn-primary {
   display: flex;
   align-items: center;
-  gap: 10px;
-}
-
-.otp-demo-banner span:first-child { font-size: 18px; }
-
-.otp-demo-banner .demo-label {
-  font-size: 11px;
-  color: #92400e;
-  text-transform: uppercase;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  color: #f59e0b;
-}
-
-.otp-demo-banner .demo-code {
-  font-size: 22px;
-  font-weight: 900;
-  color: #f59e0b;
-  letter-spacing: 4px;
-  margin-top: 2px;
-}
-
-/* ─── Resend ─── */
-.resend-row {
-  text-align: center;
-  margin-top: 16px;
-}
-
-.resend-btn {
-  background: none;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  background: #3b82f6;
+  color: #fff;
   border: none;
-  color: #3b82f6;
-  font-size: 14px;
+  border-radius: 14px;
+  padding: 16px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  margin-top: 8px;
+}
+
+.btn-primary:active { opacity: 0.85; }
+.btn-primary:disabled { opacity: 0.35; }
+
+.btn-secondary {
+  display: block;
+  width: 100%;
+  background: #141f35;
+  color: #94a3b8;
+  border: 1px solid #1e2d45;
+  border-radius: 14px;
+  padding: 15px;
+  font-size: 15px;
   font-weight: 600;
   cursor: pointer;
   font-family: 'Inter', sans-serif;
+  text-align: center;
+  margin-top: 10px;
+  touch-action: manipulation;
 }
 
-.resend-btn:disabled { color: #334155; cursor: not-allowed; }
+.btn-secondary:active { opacity: 0.7; }
 
-.resend-timer { font-size: 13px; color: #475569; }
-
-/* ─── Error message ─── */
-.error-msg {
-  background: rgba(239,68,68,0.1);
-  border: 1px solid rgba(239,68,68,0.25);
-  border-radius: 10px;
-  padding: 10px 14px;
-  font-size: 13px;
-  color: #fca5a5;
-  margin-bottom: 16px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.btn-skip {
+  background: transparent;
+  border: none;
+  color: #475569;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  padding: 16px 8px;
+  flex-shrink: 0;
+  touch-action: manipulation;
 }
 
-/* ─── Back button ─── */
 .btn-back {
   background: none;
   border: none;
@@ -408,13 +301,124 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  margin-bottom: 28px;
+  margin-bottom: 24px;
   padding: 0;
+  touch-action: manipulation;
 }
 
-.btn-back:hover { color: #94a3b8; }
+/* ─── OTP ─── */
+.otp-group {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 24px;
+}
 
-/* ─── Phone display badge ─── */
+.otp-input {
+  width: 46px;
+  height: 56px;
+  background: #141f35;
+  border: 1.5px solid #1e2d45;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 800;
+  color: #f1f5f9;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  -webkit-user-select: text !important;
+  user-select: text !important;
+  touch-action: manipulation;
+  box-sizing: border-box;
+}
+
+.otp-input:focus { border-color: #3b82f6; background: #172040; }
+.otp-input.filled { border-color: #22c55e; color: #22c55e; }
+.otp-input.error { border-color: #ef4444; }
+
+/* ─── Demo banner ─── */
+.otp-demo-banner {
+  background: rgba(245,158,11,0.1);
+  border: 1px solid rgba(245,158,11,0.25);
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.demo-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #f59e0b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.demo-code {
+  font-size: 20px;
+  font-weight: 900;
+  color: #f59e0b;
+  letter-spacing: 4px;
+  margin-top: 2px;
+}
+
+/* ─── Hata mesajı ─── */
+.error-msg {
+  background: rgba(239,68,68,0.1);
+  border: 1px solid rgba(239,68,68,0.25);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 13px;
+  color: #fca5a5;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ─── Link stil ─── */
+.auth-link-row {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #475569;
+}
+
+.auth-link {
+  color: #3b82f6;
+  font-weight: 700;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  padding: 0;
+  touch-action: manipulation;
+}
+
+/* ─── Divider ─── */
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0;
+  color: #334155;
+  font-size: 13px;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #1e2d45;
+}
+
+/* ─── Telefon badge ─── */
 .phone-badge {
   display: inline-flex;
   align-items: center;
@@ -425,33 +429,33 @@
   padding: 6px 14px;
   font-size: 14px;
   color: #94a3b8;
-  margin-bottom: 28px;
+  margin-bottom: 24px;
 }
 
-/* ─── Success screen ─── */
+/* ─── Başarı ekranı ─── */
 .success-screen {
   text-align: center;
-  padding: 20px;
+  padding: 40px 20px;
 }
 
 .success-icon {
-  width: 80px;
-  height: 80px;
-  background: rgba(34,197,94,0.15);
+  width: 72px;
+  height: 72px;
+  background: rgba(34,197,94,0.12);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 40px;
-  margin: 0 auto 24px;
+  font-size: 36px;
+  margin: 0 auto 20px;
 }
 
-/* ─── Step indicator ─── */
+/* ─── Adım göstergesi ─── */
 .step-indicator {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 32px;
+  margin-bottom: 28px;
 }
 
 .step-dot {
@@ -475,7 +479,26 @@
 
 .step-line.done { background: #22c55e; }
 
-/* ─── Terms text ─── */
+/* ─── Resend ─── */
+.resend-row {
+  text-align: center;
+  margin-top: 16px;
+}
+
+.resend-btn {
+  background: none;
+  border: none;
+  color: #3b82f6;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  touch-action: manipulation;
+}
+
+.resend-timer { font-size: 13px; color: #475569; }
+
+/* ─── Terms ─── */
 .terms-text {
   font-size: 12px;
   color: #334155;
@@ -483,5 +506,3 @@
   margin-top: 20px;
   line-height: 1.6;
 }
-
-.terms-text a { color: #475569; }
