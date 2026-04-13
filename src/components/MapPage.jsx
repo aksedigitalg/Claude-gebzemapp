@@ -5,7 +5,6 @@ import 'leaflet/dist/leaflet.css';
 import { pharmacies } from '../data/pharmacies';
 import { historicalPlaces } from '../data/historicalPlaces';
 
-// Fix default marker icon
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
@@ -13,192 +12,102 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
 });
 
-const createIcon = (emoji, color) => {
-  return L.divIcon({
-    html: `<div style="
-      background: ${color};
-      border-radius: 50% 50% 50% 0;
-      width: 36px;
-      height: 36px;
-      transform: rotate(-45deg);
-      border: 3px solid white;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
-      display:flex;align-items:center;justify-content:center;
-    "><span style="transform:rotate(45deg);font-size:16px;display:block;text-align:center;line-height:30px;">${emoji}</span></div>`,
-    className: '',
-    iconSize: [36, 36],
-    iconAnchor: [18, 36],
-    popupAnchor: [0, -36],
-  });
-};
+const makeIcon = (emoji, bg) => L.divIcon({
+  html: `<div style="background:${bg};border-radius:50% 50% 50% 0;width:34px;height:34px;transform:rotate(-45deg);border:2.5px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center"><span style="transform:rotate(45deg);font-size:15px;display:block;text-align:center;line-height:29px">${emoji}</span></div>`,
+  className: '',
+  iconSize: [34, 34],
+  iconAnchor: [17, 34],
+  popupAnchor: [0, -34],
+});
 
-const pharmacyIcon = createIcon('💊', '#22c55e');
-const dutyPharmacyIcon = createIcon('💊', '#ef4444');
-const historicalIcon = createIcon('🏛️', '#f59e0b');
+const pharIcon = makeIcon('💊', '#22c55e');
+const dutyIcon = makeIcon('💊', '#ef4444');
+const histIcon = makeIcon('🏛️', '#f59e0b');
 
-function RecenterMap({ center }) {
+function Recenter({ center }) {
   const map = useMap();
-  useEffect(() => {
-    map.setView(center, 14);
-  }, [center, map]);
+  useEffect(() => { map.setView(center, 14); }, [center, map]);
   return null;
 }
 
 export default function MapPage() {
   const [filter, setFilter] = useState('all');
-  const [selected, setSelected] = useState(null);
   const center = [40.8022, 29.4310];
 
   const markers = [
-    ...(filter !== 'historical'
-      ? pharmacies.map((p) => ({ ...p, type: 'pharmacy' }))
-      : []),
-    ...(filter !== 'pharmacies'
-      ? historicalPlaces.map((p) => ({ ...p, type: 'historical' }))
-      : []),
+    ...(filter !== 'historical' ? pharmacies.map(p => ({ ...p, _type: 'pharmacy' })) : []),
+    ...(filter !== 'pharmacies' ? historicalPlaces.map(p => ({ ...p, _type: 'historical' })) : []),
   ];
 
   return (
-    <div>
-      <h2 className="section-title">🗺️ Gebze Haritası</h2>
+    <div className="container">
+      <div className="page-title">🗺️ Harita</div>
 
-      {/* Filters */}
-      <div className="map-filters">
-        <button
-          className={`filter-btn ${filter === 'all' ? 'active' : ''}`}
-          onClick={() => setFilter('all')}
-        >
-          🗺️ Tümü
-        </button>
-        <button
-          className={`filter-btn ${filter === 'pharmacies' ? 'active' : ''}`}
-          onClick={() => setFilter('pharmacies')}
-        >
-          💊 Eczaneler
-        </button>
-        <button
-          className={`filter-btn ${filter === 'historical' ? 'active' : ''}`}
-          onClick={() => setFilter('historical')}
-        >
-          🏛️ Tarihi Yerler
-        </button>
+      <div className="filter-row">
+        {[
+          { id: 'all',        label: '🗺️ Tümü' },
+          { id: 'pharmacies', label: '💊 Eczaneler' },
+          { id: 'historical', label: '🏛️ Tarihi Yerler' },
+        ].map(f => (
+          <button key={f.id} className={`filter-pill ${filter === f.id ? 'active' : ''}`} onClick={() => setFilter(f.id)}>
+            {f.label}
+          </button>
+        ))}
       </div>
 
-      {/* Legend */}
-      <div style={{
-        display: 'flex',
-        gap: '16px',
-        marginBottom: '16px',
-        flexWrap: 'wrap',
-        fontSize: '13px',
-        color: '#94a3b8'
-      }}>
-        {(filter === 'all' || filter === 'pharmacies') && (
-          <>
-            <span>🟢 Eczane</span>
-            <span>🔴 Nöbetçi Eczane</span>
-          </>
-        )}
-        {(filter === 'all' || filter === 'historical') && (
-          <span>🟡 Tarihi Yer</span>
-        )}
-      </div>
-
-      {/* Map */}
-      <div className="map-container" style={{ height: '500px' }}>
-        <MapContainer
-          center={center}
-          zoom={14}
-          style={{ height: '500px', width: '100%' }}
-        >
+      <div className="map-wrapper">
+        <MapContainer center={center} zoom={14} style={{ height: '420px', width: '100%' }}>
           <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            attribution='&copy; OpenStreetMap'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          <RecenterMap center={center} />
-
-          {markers.map((item) => {
-            const icon =
-              item.type === 'pharmacy'
-                ? item.onDuty
-                  ? dutyPharmacyIcon
-                  : pharmacyIcon
-                : historicalIcon;
-            return (
-              <Marker
-                key={`${item.type}-${item.id}`}
-                position={[item.lat, item.lng]}
-                icon={icon}
-                eventHandlers={{ click: () => setSelected(item) }}
-              >
-                <Popup>
-                  <div style={{ minWidth: '180px', fontFamily: 'Inter, sans-serif' }}>
-                    <strong style={{ fontSize: '14px' }}>
-                      {item.type === 'pharmacy' ? '💊' : '🏛️'} {item.name}
-                    </strong>
-                    {item.type === 'pharmacy' ? (
-                      <div style={{ marginTop: '6px', fontSize: '12px', color: '#666' }}>
-                        <p>📍 {item.address}</p>
-                        <p>🕐 {item.hours}</p>
-                        <p>📞 {item.phone}</p>
+          <Recenter center={center} />
+          {markers.map(item => (
+            <Marker
+              key={`${item._type}-${item.id}`}
+              position={[item.lat, item.lng]}
+              icon={item._type === 'pharmacy' ? (item.onDuty ? dutyIcon : pharIcon) : histIcon}
+            >
+              <Popup>
+                <div style={{ fontFamily: 'Inter,sans-serif', minWidth: 170 }}>
+                  <strong style={{ fontSize: 13 }}>
+                    {item._type === 'pharmacy' ? '💊' : '🏛️'} {item.name}
+                  </strong>
+                  <div style={{ marginTop: 6, fontSize: 12, color: '#555', lineHeight: 1.6 }}>
+                    {item._type === 'pharmacy' ? (
+                      <>
+                        <div>📍 {item.address}</div>
+                        <div>🕐 {item.hours}</div>
+                        <div>📞 {item.phone}</div>
                         {item.onDuty && (
-                          <span style={{
-                            display: 'inline-block',
-                            marginTop: '6px',
-                            background: '#22c55e',
-                            color: '#fff',
-                            padding: '2px 8px',
-                            borderRadius: '10px',
-                            fontSize: '11px',
-                            fontWeight: '700'
-                          }}>Nöbetçi</span>
+                          <span style={{ display:'inline-block', marginTop:5, background:'#22c55e', color:'#fff', padding:'2px 8px', borderRadius:10, fontSize:11, fontWeight:700 }}>Nöbetçi</span>
                         )}
-                      </div>
+                      </>
                     ) : (
-                      <div style={{ marginTop: '6px', fontSize: '12px', color: '#666' }}>
-                        <p>📍 {item.location}</p>
-                        <p>📅 {item.period}</p>
-                        <p>🎫 {item.entryFee}</p>
-                      </div>
+                      <>
+                        <div>📍 {item.location}</div>
+                        <div>📅 {item.period}</div>
+                        <div>🎫 {item.entryFee}</div>
+                      </>
                     )}
                   </div>
-                </Popup>
-              </Marker>
-            );
-          })}
+                </div>
+              </Popup>
+            </Marker>
+          ))}
         </MapContainer>
       </div>
 
-      {/* Summary */}
-      <div style={{
-        marginTop: '16px',
-        display: 'flex',
-        gap: '12px',
-        flexWrap: 'wrap'
-      }}>
+      <div className="map-summary">
         {(filter === 'all' || filter === 'pharmacies') && (
-          <div style={{
-            background: '#1e293b',
-            border: '1px solid #334155',
-            borderRadius: '10px',
-            padding: '12px 18px',
-            fontSize: '13px',
-            color: '#94a3b8'
-          }}>
-            💊 <strong style={{ color: '#e2e8f0' }}>{pharmacies.length}</strong> Eczane &nbsp;|&nbsp;
-            🟢 <strong style={{ color: '#22c55e' }}>{pharmacies.filter(p => p.onDuty).length}</strong> Nöbetçi
+          <div className="map-badge">
+            💊 <strong style={{ color: '#e2e8f0' }}>{pharmacies.length}</strong> eczane &nbsp;·&nbsp;
+            <strong style={{ color: '#22c55e' }}>{pharmacies.filter(p => p.onDuty).length}</strong> nöbetçi
           </div>
         )}
         {(filter === 'all' || filter === 'historical') && (
-          <div style={{
-            background: '#1e293b',
-            border: '1px solid #334155',
-            borderRadius: '10px',
-            padding: '12px 18px',
-            fontSize: '13px',
-            color: '#94a3b8'
-          }}>
-            🏛️ <strong style={{ color: '#e2e8f0' }}>{historicalPlaces.length}</strong> Tarihi Yer
+          <div className="map-badge">
+            🏛️ <strong style={{ color: '#e2e8f0' }}>{historicalPlaces.length}</strong> tarihi yer
           </div>
         )}
       </div>

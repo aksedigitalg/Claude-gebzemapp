@@ -6,37 +6,31 @@ export default function HistoricalPage() {
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('all');
 
-  const categories = ['all', ...new Set(historicalPlaces.map((p) => p.category))];
+  const cats = ['all', ...new Set(historicalPlaces.map(p => p.category))];
 
   const filtered = historicalPlaces.filter((p) => {
-    const matchSearch =
-      p.name.toLowerCase().includes(search.toLowerCase()) ||
-      p.description.toLowerCase().includes(search.toLowerCase()) ||
-      p.location.toLowerCase().includes(search.toLowerCase());
+    const q = search.toLowerCase();
+    const matchSearch = p.name.toLowerCase().includes(q) ||
+      p.description.toLowerCase().includes(q) ||
+      p.location.toLowerCase().includes(q);
     const matchCat = category === 'all' || p.category === category;
     return matchSearch && matchCat;
   });
 
   return (
-    <div>
-      <h2 className="section-title">🏛️ Gebze'nin Tarihi Yerleri</h2>
+    <div className="container">
+      <div className="page-title">🏛️ Tarihi Yerler</div>
 
-      {/* Search */}
       <div className="search-bar">
-        <Search size={18} color="#475569" />
-        <input
-          placeholder="Tarihi yer veya dönem ara..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
+        <Search size={16} color="#334155" />
+        <input placeholder="Tarihi yer ara..." value={search} onChange={e => setSearch(e.target.value)} />
       </div>
 
-      {/* Category filters */}
-      <div className="map-filters" style={{ marginBottom: '24px' }}>
-        {categories.map((cat) => (
+      <div className="filter-row">
+        {cats.map(cat => (
           <button
             key={cat}
-            className={`filter-btn ${category === cat ? 'active' : ''}`}
+            className={`filter-pill ${category === cat ? 'active' : ''}`}
             onClick={() => setCategory(cat)}
           >
             {cat === 'all' ? `Tümü (${historicalPlaces.length})` : cat}
@@ -44,52 +38,29 @@ export default function HistoricalPage() {
         ))}
       </div>
 
-      {/* Cards */}
-      <div className="places-grid">
-        {filtered.map((place) => (
-          <div key={place.id} className="place-card">
-            <div className="place-image-placeholder">
-              {place.emoji}
-            </div>
+      <div className="places-list">
+        {filtered.map((p) => (
+          <div key={p.id} className="place-card">
+            <div className="place-image-placeholder">{p.emoji}</div>
             <div className="place-content">
-              <span className="place-category">{place.category}</span>
-              <h3 className="place-name">{place.name}</h3>
-              <p className="place-desc">{place.description}</p>
+              <span className="place-category">{p.category}</span>
+              <div className="place-name">{p.name}</div>
+              <p className="place-desc">{p.description}</p>
               <div className="place-meta">
-                <div className="place-meta-item">
-                  <Clock size={13} />
-                  <span>{place.visitHours}</span>
-                </div>
-                <div className="place-meta-item">
-                  <MapPin size={13} />
-                  <span>{place.location}</span>
-                </div>
-                <div className="place-meta-item">
-                  <Ticket size={13} />
-                  <span>{place.entryFee}</span>
-                </div>
+                <div className="place-meta-item"><Clock size={12} />{p.visitHours}</div>
+                <div className="place-meta-item"><MapPin size={12} />{p.location}</div>
+                <div className="place-meta-item"><Ticket size={12} />{p.entryFee}</div>
               </div>
-              <div style={{
-                marginTop: '12px',
-                padding: '6px 12px',
-                background: 'rgba(245,158,11,0.1)',
-                borderRadius: '8px',
-                display: 'inline-block',
-                fontSize: '12px',
-                color: '#f59e0b',
-                fontWeight: '600'
-              }}>
-                📅 {place.period}
-              </div>
+              <div className="period-tag">📅 {p.period}</div>
             </div>
           </div>
         ))}
       </div>
 
       {filtered.length === 0 && (
-        <div style={{ textAlign: 'center', padding: '60px', color: '#475569' }}>
-          <div style={{ fontSize: '48px', marginBottom: '12px' }}>🔍</div>
-          <p>Arama kriterlerinize uygun yer bulunamadı.</p>
+        <div className="empty-state">
+          <div className="empty-icon">🔍</div>
+          <p>Sonuç bulunamadı.</p>
         </div>
       )}
     </div>

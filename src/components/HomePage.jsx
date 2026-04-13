@@ -1,125 +1,94 @@
-import { Pill, Landmark, Map, Phone, MapPin, Clock } from 'lucide-react';
-
-export default function HomePage({ setActivePage }) {
+export default function HomePage({ setPage }) {
   return (
-    <div>
+    <div className="container">
+
       {/* Hero */}
       <div className="hero">
-        <h2>Hoşgeldiniz, Gebze 🏙️</h2>
-        <p>Şehrinizin eczane, tarihi yer ve harita bilgilerine tek yerden ulaşın</p>
+        <h2>Hoşgeldiniz 👋</h2>
+        <p>Gebze'de ne arıyorsunuz?</p>
         <div className="hero-stats">
-          <div className="stat">
-            <div className="stat-number">6</div>
-            <div className="stat-label">Eczane</div>
+          <div className="stat-pill">
+            <span className="stat-pill-num">6</span>
+            <span className="stat-pill-label">Eczane</span>
           </div>
-          <div className="stat">
-            <div className="stat-number">3</div>
-            <div className="stat-label">Nöbetçi</div>
+          <div className="stat-pill">
+            <span className="stat-pill-num">3</span>
+            <span className="stat-pill-label">Nöbetçi</span>
           </div>
-          <div className="stat">
-            <div className="stat-number">6</div>
-            <div className="stat-label">Tarihi Yer</div>
-          </div>
-          <div className="stat">
-            <div className="stat-number">500K+</div>
-            <div className="stat-label">Nüfus</div>
+          <div className="stat-pill">
+            <span className="stat-pill-num">6</span>
+            <span className="stat-pill-label">Tarihi Yer</span>
           </div>
         </div>
       </div>
 
       {/* Quick access */}
-      <h2 className="section-title">⚡ Hızlı Erişim</h2>
+      <div className="section-label">⚡ Hızlı Erişim</div>
       <div className="quick-grid">
-        <div className="quick-card" onClick={() => setActivePage('pharmacies')}>
-          <div className="quick-card-icon">💊</div>
+        <div className="quick-card" onClick={() => setPage('pharmacies')}>
+          <span className="quick-card-icon">💊</span>
           <h3>Nöbetçi Eczaneler</h3>
           <p>3 eczane nöbette</p>
         </div>
-        <div className="quick-card" onClick={() => setActivePage('historical')}>
-          <div className="quick-card-icon">🏛️</div>
+        <div className="quick-card" onClick={() => setPage('historical')}>
+          <span className="quick-card-icon">🏛️</span>
           <h3>Tarihi Yerler</h3>
-          <p>Gezilecek 6 yer</p>
+          <p>6 mekan</p>
         </div>
-        <div className="quick-card" onClick={() => setActivePage('map')}>
-          <div className="quick-card-icon">🗺️</div>
-          <h3>İnteraktif Harita</h3>
-          <p>Tüm konumlar haritada</p>
+        <div className="quick-card" onClick={() => setPage('map')}>
+          <span className="quick-card-icon">🗺️</span>
+          <h3>Harita</h3>
+          <p>Tüm konumlar</p>
         </div>
         <div className="quick-card">
-          <div className="quick-card-icon">🌤️</div>
-          <h3>Gebze Havası</h3>
-          <p>18°C • Parçalı Bulutlu</p>
+          <span className="quick-card-icon">🌤️</span>
+          <h3>Hava Durumu</h3>
+          <p>18°C · Bulutlu</p>
         </div>
       </div>
 
       {/* Emergency */}
-      <h2 className="section-title">🚨 Acil Hatlar</h2>
+      <div className="section-label">🚨 Acil Hatlar</div>
       <div className="emergency-grid">
-        <a className="emergency-card" href="tel:112">
-          <span className="emergency-icon">🚑</span>
-          <div className="emergency-info">
-            <h4>Ambulans</h4>
-            <p>112</p>
-          </div>
-        </a>
-        <a className="emergency-card" href="tel:110">
-          <span className="emergency-icon">🚒</span>
-          <div className="emergency-info">
-            <h4>İtfaiye</h4>
-            <p>110</p>
-          </div>
-        </a>
-        <a className="emergency-card" href="tel:155">
-          <span className="emergency-icon">🚔</span>
-          <div className="emergency-info">
-            <h4>Polis</h4>
-            <p>155</p>
-          </div>
-        </a>
-        <a className="emergency-card" href="tel:156">
-          <span className="emergency-icon">🪖</span>
-          <div className="emergency-info">
-            <h4>Jandarma</h4>
-            <p>156</p>
-          </div>
-        </a>
-        <a className="emergency-card" href="tel:182">
-          <span className="emergency-icon">💊</span>
-          <div className="emergency-info">
-            <h4>ALO Eczane</h4>
-            <p>182</p>
-          </div>
-        </a>
+        {[
+          { emoji: '🚑', name: 'Ambulans',  num: '112' },
+          { emoji: '🚒', name: 'İtfaiye',  num: '110' },
+          { emoji: '🚔', name: 'Polis',     num: '155' },
+          { emoji: '🪖', name: 'Jandarma', num: '156' },
+          { emoji: '💊', name: 'ALO Eczane', num: '182' },
+          { emoji: '🏥', name: 'SABİM',    num: '184' },
+        ].map((e) => (
+          <a key={e.num} className="emergency-card" href={`tel:${e.num}`}>
+            <span className="emergency-icon">{e.emoji}</span>
+            <div className="emergency-info">
+              <h4>{e.name}</h4>
+              <p>{e.num}</p>
+            </div>
+          </a>
+        ))}
       </div>
 
-      {/* Info about Gebze */}
-      <h2 className="section-title">📍 Gebze Hakkında</h2>
-      <div style={{
-        background: '#1e293b',
-        border: '1px solid #334155',
-        borderRadius: '16px',
-        padding: '24px',
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-        gap: '20px'
-      }}>
+      {/* Gebze Info */}
+      <div className="section-label">📍 Gebze</div>
+      <div className="info-grid">
         {[
-          { label: 'İl', value: 'Kocaeli', icon: '📍' },
-          { label: 'Yüzölçümü', value: '473 km²', icon: '📐' },
-          { label: 'Nüfus', value: '~500.000', icon: '👥' },
-          { label: 'Organize Sanayi', value: '3 OSB', icon: '🏭' },
-          { label: 'Tarihsel İsim', value: 'Libyssa', icon: '📜' },
-          { label: 'İstanbul\'a Mesafe', value: '55 km', icon: '🛣️' },
-        ].map((item, i) => (
-          <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <span style={{ fontSize: '24px' }}>{item.icon}</span>
+          { emoji: '🏙️', label: 'İl', value: 'Kocaeli' },
+          { emoji: '👥', label: 'Nüfus', value: '~500.000' },
+          { emoji: '📐', label: 'Yüzölçümü', value: '473 km²' },
+          { emoji: '📜', label: 'Tarihi İsim', value: 'Libyssa' },
+          { emoji: '🛣️', label: "İstanbul'a", value: '55 km' },
+          { emoji: '🏭', label: 'Organize Sanayi', value: '3 OSB' },
+        ].map((r, i) => (
+          <div key={i} className="info-row">
+            <span className="info-emoji">{r.emoji}</span>
             <div>
-              <div style={{ fontSize: '12px', color: '#64748b' }}>{item.label}</div>
-              <div style={{ fontSize: '15px', fontWeight: '600', color: '#f1f5f9' }}>{item.value}</div>
+              <div className="info-label">{r.label}</div>
+              <div className="info-value">{r.value}</div>
             </div>
           </div>
         ))}
       </div>
+
     </div>
   );
 }
