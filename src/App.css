@@ -1,0 +1,577 @@
+/* App layout */
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.header {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  border-bottom: 1px solid #334155;
+  padding: 0 24px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+}
+
+.header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0;
+  gap: 20px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-icon {
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.logo-text h1 {
+  font-size: 20px;
+  font-weight: 800;
+  color: #f1f5f9;
+  letter-spacing: -0.5px;
+}
+
+.logo-text span {
+  font-size: 12px;
+  color: #64748b;
+  font-weight: 400;
+}
+
+/* Navigation */
+.nav {
+  display: flex;
+  gap: 4px;
+}
+
+.nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 16px;
+  border-radius: 10px;
+  border: none;
+  background: transparent;
+  color: #94a3b8;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  font-family: 'Inter', sans-serif;
+}
+
+.nav-btn:hover {
+  background: #1e293b;
+  color: #e2e8f0;
+}
+
+.nav-btn.active {
+  background: #1d4ed8;
+  color: #fff;
+}
+
+/* Main content */
+.main {
+  flex: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 24px;
+  width: 100%;
+}
+
+/* Hero Section */
+.hero {
+  background: linear-gradient(135deg, #1e3a5f 0%, #1e293b 50%, #0f172a 100%);
+  border-radius: 20px;
+  padding: 60px 40px;
+  text-align: center;
+  margin-bottom: 32px;
+  border: 1px solid #334155;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(ellipse at center, rgba(59,130,246,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero h2 {
+  font-size: 42px;
+  font-weight: 800;
+  color: #f1f5f9;
+  letter-spacing: -1px;
+  margin-bottom: 12px;
+}
+
+.hero p {
+  font-size: 17px;
+  color: #94a3b8;
+  margin-bottom: 32px;
+}
+
+.hero-stats {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.stat {
+  text-align: center;
+}
+
+.stat-number {
+  font-size: 32px;
+  font-weight: 800;
+  color: #3b82f6;
+}
+
+.stat-label {
+  font-size: 13px;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+/* Quick access cards */
+.quick-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.quick-card {
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 16px;
+  padding: 24px;
+  cursor: pointer;
+  transition: all 0.25s;
+  text-align: center;
+}
+
+.quick-card:hover {
+  border-color: #3b82f6;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(59,130,246,0.2);
+}
+
+.quick-card-icon {
+  font-size: 36px;
+  margin-bottom: 12px;
+}
+
+.quick-card h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #e2e8f0;
+  margin-bottom: 4px;
+}
+
+.quick-card p {
+  font-size: 12px;
+  color: #64748b;
+}
+
+/* Section title */
+.section-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Pharmacy cards */
+.pharmacy-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+}
+
+.pharmacy-card {
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 16px;
+  padding: 20px;
+  transition: all 0.2s;
+}
+
+.pharmacy-card:hover {
+  border-color: #3b82f6;
+  box-shadow: 0 4px 20px rgba(59,130,246,0.15);
+}
+
+.pharmacy-card.on-duty {
+  border-color: #22c55e;
+  background: linear-gradient(135deg, #1e293b, #0f2a1f);
+}
+
+.pharmacy-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.pharmacy-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+.duty-badge {
+  background: #22c55e;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 20px;
+  flex-shrink: 0;
+}
+
+.pharmacy-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pharmacy-info-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #94a3b8;
+}
+
+.pharmacy-info-row svg {
+  flex-shrink: 0;
+  color: #3b82f6;
+}
+
+.pharmacy-phone {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #334155;
+}
+
+.phone-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #1d4ed8;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+
+.phone-btn:hover {
+  background: #2563eb;
+}
+
+/* Historical places */
+.places-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 20px;
+}
+
+.place-card {
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.25s;
+}
+
+.place-card:hover {
+  border-color: #f59e0b;
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(245,158,11,0.15);
+}
+
+.place-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+  background: linear-gradient(135deg, #1e3a5f, #1e293b);
+}
+
+.place-image-placeholder {
+  width: 100%;
+  height: 200px;
+  background: linear-gradient(135deg, #1e3a5f 0%, #1a2744 50%, #0f172a 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 64px;
+}
+
+.place-content {
+  padding: 20px;
+}
+
+.place-category {
+  display: inline-block;
+  background: rgba(245,158,11,0.15);
+  color: #f59e0b;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.place-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin-bottom: 8px;
+}
+
+.place-desc {
+  font-size: 13px;
+  color: #94a3b8;
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+
+.place-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.place-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Map page */
+.map-container {
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.map-filters {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1px solid #334155;
+  background: #1e293b;
+  color: #94a3b8;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+
+.filter-btn:hover {
+  border-color: #3b82f6;
+  color: #e2e8f0;
+}
+
+.filter-btn.active {
+  background: #1d4ed8;
+  border-color: #1d4ed8;
+  color: #fff;
+}
+
+/* Search bar */
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin-bottom: 24px;
+}
+
+.search-bar input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #e2e8f0;
+  font-size: 15px;
+  font-family: 'Inter', sans-serif;
+}
+
+.search-bar input::placeholder {
+  color: #475569;
+}
+
+/* Footer */
+.footer {
+  background: #1e293b;
+  border-top: 1px solid #334155;
+  padding: 20px 24px;
+  text-align: center;
+  color: #475569;
+  font-size: 13px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .header-inner {
+    flex-direction: column;
+    gap: 12px;
+    padding: 12px 0;
+  }
+
+  .nav {
+    overflow-x: auto;
+    width: 100%;
+    padding-bottom: 4px;
+  }
+
+  .nav-btn {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+
+  .main {
+    padding: 20px 16px;
+  }
+
+  .hero {
+    padding: 40px 20px;
+  }
+
+  .hero h2 {
+    font-size: 28px;
+  }
+
+  .pharmacy-grid,
+  .places-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Weather widget */
+.weather-widget {
+  background: linear-gradient(135deg, #1e3a5f, #1e293b);
+  border: 1px solid #334155;
+  border-radius: 16px;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+.weather-temp {
+  font-size: 48px;
+  font-weight: 800;
+  color: #3b82f6;
+  line-height: 1;
+}
+
+.weather-info h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #f1f5f9;
+}
+
+.weather-info p {
+  font-size: 13px;
+  color: #94a3b8;
+  margin-top: 2px;
+}
+
+/* Emergency section */
+.emergency-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.emergency-card {
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+
+.emergency-card:hover {
+  border-color: #ef4444;
+  transform: translateY(-2px);
+}
+
+.emergency-icon {
+  font-size: 28px;
+}
+
+.emergency-info h4 {
+  font-size: 14px;
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+.emergency-info p {
+  font-size: 13px;
+  color: #ef4444;
+  font-weight: 700;
+}
