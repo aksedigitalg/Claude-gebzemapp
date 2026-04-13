@@ -1,4 +1,9 @@
+import { LogOut } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
+
 export default function TopBar() {
+  const { logout } = useAuth();
+
   return (
     <div className="topbar">
       <div className="topbar-inner">
@@ -9,10 +14,9 @@ export default function TopBar() {
             <span>Şehir Rehberi</span>
           </div>
         </div>
-        <div className="topbar-badge">
-          <span className="dot" />
-          Kocaeli
-        </div>
+        <button className="topbar-logout" onClick={logout}>
+          <LogOut size={18} strokeWidth={2} />
+        </button>
       </div>
     </div>
   );
