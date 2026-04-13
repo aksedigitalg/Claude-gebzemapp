@@ -63,27 +63,28 @@
 
 /* ─── Input group ─── */
 .input-group {
-  margin-bottom: 14px;
+  margin-bottom: 22px;
 }
 
 .input-label {
   display: block;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
-  color: #444444;
+  color: #555555;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 8px;
+  letter-spacing: 0.8px;
+  margin-bottom: 6px;
 }
 
 /* Standart input */
 .input-field {
   display: block;
   width: 100%;
-  background: #141414;
-  border: 1.5px solid #222222;
-  border-radius: 14px;
-  padding: 16px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #333333;
+  border-radius: 0;
+  padding: 14px 0;
   font-size: 16px;
   color: #ffffff;
   font-family: 'Plus Jakarta Sans', sans-serif;
@@ -93,9 +94,9 @@
   box-sizing: border-box;
 }
 
-.input-field:focus { border-color: #555555; }
+.input-field:focus { border-bottom-color: #333333; }
 .input-field::placeholder { color: #444444; }
-.input-field.error { border-color: #666666; }
+.input-field.error { border-bottom-color: #666666; }
 
 /* ─── Butonlar ─── */
 .btn-primary {
@@ -285,20 +286,20 @@
 .phone-input-row {
   display: table;
   width: 100%;
-  background: #141414;
-  border: 1.5px solid #222222;
-  border-radius: 14px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #333333;
+  border-radius: 0;
 }
 
 .phone-prefix {
   display: table-cell;
-  width: 56px;
-  padding: 16px 0 16px 16px;
+  width: 52px;
+  padding: 14px 12px 14px 0;
   font-size: 15px;
   font-weight: 600;
   color: #888888;
   vertical-align: middle;
-  border-right: 1px solid #222222;
   white-space: nowrap;
 }
 
@@ -308,7 +309,7 @@
   background: transparent;
   border: none;
   outline: none;
-  padding: 16px;
+  padding: 14px 0;
   font-size: 16px;
   color: #ffffff;
   font-family: 'Plus Jakarta Sans', sans-serif;
@@ -318,4 +319,4 @@
 }
 
 .phone-input::placeholder { color: #444444; }
-.phone-input-row:focus-within { border-color: #555555; }
+.phone-input-row:focus-within { border-bottom-color: #333333; }

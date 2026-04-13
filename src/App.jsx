@@ -14,9 +14,6 @@ import HomePage from './components/HomePage';
 import PharmaciesPage from './components/PharmaciesPage';
 import HistoricalPage from './components/HistoricalPage';
 import MapPage from './components/MapPage';
-import SearchPage from './components/SearchPage';
-import CategoriesPage from './components/CategoriesPage';
-import ProfilePage from './components/ProfilePage';
 
 // Auth flow: login | register | reset
 function AuthFlow() {
@@ -51,9 +48,6 @@ function MainApp() {
   const renderPage = () => {
     switch (page) {
       case 'home':        return <HomePage setPage={setPage} />;
-      case 'search':      return <SearchPage setPage={setPage} />;
-      case 'categories':  return <CategoriesPage setPage={setPage} />;
-      case 'profile':     return <ProfilePage />;
       case 'pharmacies':  return <PharmaciesPage />;
       case 'historical':  return <HistoricalPage />;
       case 'map':         return <MapPage />;
@@ -61,7 +55,7 @@ function MainApp() {
     }
   };
 
-  const navPage = ['home', 'search', 'categories', 'profile'].includes(page)
+  const navPage = ['home', 'pharmacies', 'historical', 'map'].includes(page)
     ? page : 'home';
 
   return (
