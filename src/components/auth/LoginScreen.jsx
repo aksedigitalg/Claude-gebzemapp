@@ -33,18 +33,18 @@ export default function LoginScreen({ onRegister, onReset }) {
         <h2 className="auth-title">Giriş Yap</h2>
         <p className="auth-subtitle">Telefon ve şifrenizle giriş yapın.</p>
 
-        {error && <div className="error-msg"><span>⚠️</span> {error}</div>}
+        {error && <div className="error-msg">⚠️ {error}</div>}
 
         <div className="input-group">
-          <label className="input-label">Telefon</label>
-          <div className="input-prefix-wrap">
-            <span className="input-prefix-flag">🇹🇷 +90</span>
+          <label className="input-label">Telefon Numarası</label>
+          <div className="phone-input-row">
+            <span className="phone-prefix">+90</span>
             <input
+              className="phone-input"
               type="tel"
               inputMode="numeric"
-              placeholder="5XX XXX XX XX"
+              placeholder="5XXXXXXXXX"
               value={phone}
-              autoComplete="tel"
               onChange={e => { setPhone(e.target.value.replace(/\D/g, '').slice(0, 10)); setError(''); }}
             />
           </div>
@@ -55,15 +55,13 @@ export default function LoginScreen({ onRegister, onReset }) {
           <input
             className="input-field"
             type="password"
-            placeholder="••••••"
+            placeholder="Şifreniz"
             value={password}
-            autoComplete="current-password"
             onChange={e => { setPassword(e.target.value); setError(''); }}
-            onKeyDown={e => e.key === 'Enter' && handleSubmit()}
           />
         </div>
 
-        <div style={{ textAlign: 'right', marginBottom: 20 }}>
+        <div style={{ textAlign: 'right', marginBottom: 16 }}>
           <button className="auth-link" onClick={onReset}>Şifremi unuttum</button>
         </div>
 

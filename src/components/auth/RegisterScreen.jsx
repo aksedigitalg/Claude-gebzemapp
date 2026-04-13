@@ -100,14 +100,14 @@ export default function RegisterScreen({ onBack }) {
 
             <div className="input-group">
               <label className="input-label">Telefon</label>
-              <div className="input-prefix-wrap">
-                <span className="input-prefix-flag">🇹🇷 +90</span>
+              <div className="phone-input-row">
+                <span className="phone-prefix">+90</span>
                 <input
+                  className="phone-input"
                   type="tel"
                   inputMode="numeric"
-                  placeholder="5XX XXX XX XX"
+                  placeholder="5XXXXXXXXX"
                   value={phone}
-                  autoComplete="tel"
                   onChange={e => { setPhone(e.target.value.replace(/\D/g, '').slice(0, 10)); setError(''); }}
                 />
               </div>
