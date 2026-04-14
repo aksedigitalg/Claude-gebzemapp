@@ -11,20 +11,18 @@ const items = [
 export default function BottomNav({ active, onChange }) {
   return (
     <div className="bottom-nav-wrap">
-      <div className="bottom-nav">
-        <div className="bottom-nav-inner">
-          {items.map(({ id, icon: Icon }) => (
-            <button
-              key={id}
-              className={`nav-item ${active === id ? 'active' : ''}`}
-              onClick={() => onChange(id)}
-            >
-              <span className="nav-icon-circle">
-                <Icon size={21} strokeWidth={active === id ? 2.5 : 1.8} />
-              </span>
-            </button>
-          ))}
-        </div>
+      <div className="bottom-nav-inner">
+        {items.map(({ id, icon: Icon }) => (
+          <button
+            key={id}
+            className={`nav-item ${active === id ? 'active' : ''}`}
+            onClick={() => onChange(id)}
+          >
+            <span className="nav-icon-circle">
+              <Icon size={21} strokeWidth={active === id ? 2.5 : 1.8} />
+            </span>
+          </button>
+        ))}
       </div>
     </div>
   );
